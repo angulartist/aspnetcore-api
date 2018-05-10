@@ -1,8 +1,8 @@
 using System;
 
-namespace dotnetFun.API.Models
+namespace dotnetFun.API.Dtos
 {
-    public class Photo
+    public class PhotoForReturnDto
     {
         public int Id { get; set; }
 
@@ -15,9 +15,5 @@ namespace dotnetFun.API.Models
         public bool isMain { get; set; }
 
         public string PublicId { get; set; }
-
-        public User User { get; set; }
-
-        public int UserId { get; set; }
     }
 }

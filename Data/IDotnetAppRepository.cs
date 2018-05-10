@@ -15,5 +15,7 @@ namespace dotnetFun.API.Data
          Task<IEnumerable<User>> GetUsers();
 
          Task<User> GetUser(string username);
+
+         Task<Photo> GetPhoto(int id);
     }
 }

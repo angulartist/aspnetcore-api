@@ -15,6 +15,7 @@ namespace dotnetFun.API.Controllers
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
+        
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
         public AuthController(IAuthRepository repo, IConfiguration config)
@@ -27,7 +28,8 @@ namespace dotnetFun.API.Controllers
 
         public async Task<IActionResult> Register([FromBody] UserForRegisterDto userForRegisterDto)
         {
-            userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
+            if (!string.IsNullOrEmpty(userForRegisterDto.Username))
+                userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
 
             if (await _repo.UserExists(userForRegisterDto.Username))
                 ModelState.AddModelError("Username", "Cet identifiant existe déjà.");

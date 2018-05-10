@@ -1,1 +1,1 @@
-J'me fait chier alors je fais des API en C#
+Experimenting C# API via ASPNET Core 2

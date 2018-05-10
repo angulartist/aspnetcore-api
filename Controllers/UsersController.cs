@@ -31,10 +31,10 @@ namespace dotnetFun.API.Controllers
             return Ok(usersDataFormated);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(int id)
+        [HttpGet("{username}")]
+        public async Task<IActionResult> GetUser(string username)
         {
-            var user = await _repo.GetUser(id);
+            var user = await _repo.GetUser(username);
 
             var userDataFormated = _mapper.Map<UserForDetailsDto>(user);
 

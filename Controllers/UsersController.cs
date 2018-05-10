@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using dotnetFun.API.Data;
@@ -40,6 +42,30 @@ namespace dotnetFun.API.Controllers
 
             return Ok(userDataFormated);
 
+        }
+
+        [HttpPut("{username}")]
+        public async Task<IActionResult> UpdateUser(string username, [FromBody] UserForUpdateDto userForUpdateDto)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var loggedUserName = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var userFromRepo = await _repo.GetUser(username);
+
+            if (userFromRepo == null)
+                return NotFound($"L'utilisateur {username} n'existe pas");
+
+            if (loggedUserName != userFromRepo.Id)
+                return Unauthorized();
+
+            _mapper.Map(userForUpdateDto, userFromRepo);
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            throw new Exception($"[PUT] Opération impossible.");
         }
     }
 }
